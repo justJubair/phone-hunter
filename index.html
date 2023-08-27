@@ -11,11 +11,17 @@
 </head>
 <body>
     <header>
-        <h1 class="text-3xl text-center">Phone Hunter</h1>
+        <h1 class="text-3xl font-semibold text-center mt-4">Search your phone</h1>
     </header>
     <main>
-        <section>
-
+        <section class="max-w-screen-lg mx-auto">
+           <div class="text-center my-4">
+            <input type="text" placeholder="Type here" class="input input-bordered input-accent w-full max-w-xs" />
+            <button onclick="loadPhone()" class="btn btn-accent">Search</button>
+           </div>
+           <!-- cards -->
+           <div id="card-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+           </div>
         </section>
     </main>
     <script src="index.js"></script>
