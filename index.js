@@ -1,19 +1,21 @@
 const loadPhone = async () => {
-    const inputField = document.getElementById('input-field').value;
+    toggleLoadingSpinner(true)
+    const inputElement = document.getElementById('input-field'),
+          inputField = inputElement.value;
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`);
     const data = await res.json();
     showPhones(data);
    
 }
-
-// take data from input field
-
-
-
+ 
+// show phones function
 const showPhones = (data)=>{
-    const phones = data.data;
+    let phones = data.data;
+    showAllButton(phones.length);
+    phones = phones.slice(0,9)
     const cardContainer = document.getElementById('card-container');
     cardContainer.textContent = '';
+
     phones.forEach((phone)=>{
         const div = document.createElement('div');
         div.className = 'p-4'
@@ -31,5 +33,27 @@ const showPhones = (data)=>{
         </div>
         `;
         cardContainer.appendChild(div)
-    })
+    });
+    // hide loading spinner
+    toggleLoadingSpinner(false);
+};
+
+// show loading spinner function
+const toggleLoadingSpinner = (isLoading)=>{
+    const spinner = document.getElementById('spinner');
+    if(isLoading) {
+         spinner.classList.remove('hidden');
+    } else{
+     spinner.classList.add('hidden');
+    }
+ }
+
+//  show all button function
+const showAllButton = (numberOfPhones)=>{
+    const showAllBtn = document.getElementById('showAllBtn');
+    if(numberOfPhones > 9) {
+        showAllBtn.classList.remove('hidden');
+    } else {
+        showAllBtn.classList.add('hidden');
+    }
 };
