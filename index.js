@@ -2,6 +2,9 @@ const loadPhone = async (isShowAll) => {
     toggleLoadingSpinner(true)
     const inputElement = document.getElementById('input-field'),
           inputField = inputElement.value;
+    if(inputField === '') {
+        return alert('No data available');
+    }      
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`);
     const data = await res.json();
     showPhones(data, isShowAll);
@@ -77,14 +80,17 @@ const showDetails = async (id) =>{
     const data = await res.json();
     const singlePhoneDetails = data.data;
     console.log(singlePhoneDetails);
-    const phoneDetailsContainer = document.getElementById('phone-details-container');
+    const phoneImg = document.getElementById('phone-img');
     const phoneName = document.getElementById('phone-name');
+    const phoneDetailsContainer = document.getElementById('phone-details-container');
     phoneName.innerText = singlePhoneDetails.name;
+    phoneImg.innerHTML = `<img class="w-36" src=${singlePhoneDetails.image}>`
     phoneDetailsContainer.innerHTML = `
-    <img class="w-36" src=${singlePhoneDetails.image}>
     <p class="my-2">Your dream phone at the most affordable price you can imagine</p>
-    <p>Storage: <span class="font-semibold">${singlePhoneDetails.mainFeatures.storage}</span></p>
-    <p>Display Size: <span class="font-semibold">${singlePhoneDetails.mainFeatures.displaySize}</span>
+    <p class="font-semibold">Storage: ${singlePhoneDetails.mainFeatures.storage}</p>
+    <p class ="font-semibold">Display Size: ${singlePhoneDetails.mainFeatures.displaySize}</p>
+    <p class="font-semibold">Chipset: ${singlePhoneDetails?.mainFeatures?.chipSet}</p>
+    <p class="font-semibold">GPS: ${singlePhoneDetails?.others?.GPS || 'GPS is not available'}</p>
     `;
     show_phone_details.showModal()
 }
