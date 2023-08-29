@@ -25,12 +25,26 @@
                 <span class="loading loading-bars loading-lg"></span>
             </div>
            <!-- cards -->
+           
            <div id="card-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <!-- dynamically loaded content -->
            </div>
+           <!-- You can open the modal using ID.showModal() method -->
+          <!-- Show details modal -->
+            <dialog id="show_phone_details" class="modal">
+                <form id="modal-container" method="dialog" class="modal-box">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕<button>
+                    <h3 id="phone-name" class="font-bold text-lg"></h3>
+                    <!-- phone details container -->
+                    <div id="phone-details-container" class="flex flex-col items-center">
+
+                    </div>
+                    
+                </form>
+            </dialog>
            <!-- show all button -->
            <div class="text-center my-4">
-            <button id="showAllBtn" class="btn btn-accent hidden">Show All</button>
+            <button onclick="showAllPhones()" id="showAllBtn" class="btn btn-accent hidden">Show All</button>
            </div>
         </section>
     </main>

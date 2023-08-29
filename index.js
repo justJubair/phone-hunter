@@ -1,22 +1,28 @@
-const loadPhone = async () => {
+const loadPhone = async (isShowAll) => {
     toggleLoadingSpinner(true)
     const inputElement = document.getElementById('input-field'),
           inputField = inputElement.value;
     const res = await fetch(`https://openapi.programming-hero.com/api/phones?search=${inputField}`);
     const data = await res.json();
-    showPhones(data);
+    showPhones(data, isShowAll);
    
 }
  
 // show phones function
-const showPhones = (data)=>{
+const showPhones = (data, isShowAll)=>{
     let phones = data.data;
-    showAllButton(phones.length);
-    phones = phones.slice(0,9)
+    // show all button
+    
+    showAllButton(phones.length, isShowAll);
+    // display only first 9 phones if not show all
+    if(!isShowAll){
+        phones = phones.slice(0,9);
+    }
+   
     const cardContainer = document.getElementById('card-container');
     cardContainer.textContent = '';
 
-    phones.forEach((phone)=>{
+    phones.forEach((phone)=> {
         const div = document.createElement('div');
         div.className = 'p-4'
 
@@ -27,7 +33,7 @@ const showPhones = (data)=>{
                     <h2 class="text-center font-semibold text-2xl">${phone.phone_name}</h2>
                     <p>Your dream phone at the most affordable price you can imagine</p>
                     <div class="card-actions justify-center">
-                    <button class="btn btn-primary">Show Details</button>
+                    <button  onclick="showDetails('${phone.slug}')"  class="btn btn-primary">Show Details</button>
                 </div>
             </div>
         </div>
@@ -49,11 +55,37 @@ const toggleLoadingSpinner = (isLoading)=>{
  }
 
 //  show all button function
-const showAllButton = (numberOfPhones)=>{
+const showAllButton = (numberOfPhones, showAllBtnClicked)=>{
     const showAllBtn = document.getElementById('showAllBtn');
-    if(numberOfPhones > 9) {
+    if(numberOfPhones > 9 && !showAllBtnClicked) {
         showAllBtn.classList.remove('hidden');
     } else {
         showAllBtn.classList.add('hidden');
     }
 };
+
+// show all phones function
+const showAllPhones = ()=>{
+    loadPhone(true)
+}
+
+
+
+// show details button
+const showDetails = async (id) =>{
+    const res = await fetch(`https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    const singlePhoneDetails = data.data;
+    console.log(singlePhoneDetails);
+    const phoneDetailsContainer = document.getElementById('phone-details-container');
+    const phoneName = document.getElementById('phone-name');
+    phoneName.innerText = singlePhoneDetails.name;
+    phoneDetailsContainer.innerHTML = `
+    <img class="w-36" src=${singlePhoneDetails.image}>
+    <p class="my-2">Your dream phone at the most affordable price you can imagine</p>
+    <p>Storage: <span class="font-semibold">${singlePhoneDetails.mainFeatures.storage}</span></p>
+    <p>Display Size: <span class="font-semibold">${singlePhoneDetails.mainFeatures.displaySize}</span>
+    `;
+    show_phone_details.showModal()
+}
+
