@@ -83,11 +83,11 @@ const showDetails = async (id) =>{
     const phoneImg = document.getElementById('phone-img');
     const phoneName = document.getElementById('phone-name');
     const phoneDetailsContainer = document.getElementById('phone-details-container');
-    phoneName.innerText = singlePhoneDetails.name;
-    phoneImg.innerHTML = `<img class="w-36" src=${singlePhoneDetails.image}>`
+    phoneName.innerText = singlePhoneDetails?.name;
+    phoneImg.innerHTML = `<img class="w-36" src=${singlePhoneDetails?.image}>`
     phoneDetailsContainer.innerHTML = `
     <p class="my-2">Your dream phone at the most affordable price you can imagine</p>
-    <p class="font-semibold">Storage: ${singlePhoneDetails.mainFeatures.storage}</p>
+    <p class="font-semibold">Storage: ${singlePhoneDetails?.mainFeatures?.storage}</p>
     <p class ="font-semibold">Display Size: ${singlePhoneDetails.mainFeatures.displaySize}</p>
     <p class="font-semibold">Chipset: ${singlePhoneDetails?.mainFeatures?.chipSet}</p>
     <p class="font-semibold">GPS: ${singlePhoneDetails?.others?.GPS || 'GPS is not available'}</p>
